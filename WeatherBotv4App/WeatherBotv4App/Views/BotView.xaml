@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:WeatherBotv4App.Converters"
+             x:Class="WeatherBotv4App.Views.BotView">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:UserAlignmentConverter x:Key="userAlignmentConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout 
+            Spacing="10" 
+            Padding="10" 
+            HorizontalOptions="Fill" 
+            VerticalOptions="Fill" 
+            Orientation="Vertical">
+            <ListView 
+                ItemsSource="{Binding Messages}"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="Fill" 
+                HasUnevenRows="true">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout 
+                                Orientation="Vertical">
+                                <Label 
+                                    Text="{Binding Message.Text}" 
+                                    FontSize="Large"
+                                    VerticalOptions="StartAndExpand" 
+                                    HorizontalOptions="Fill" 
+                                    HorizontalTextAlignment="{Binding Message.User, Converter={StaticResource userAlignmentConverter}}" />
+                                <Label 
+                                    Text="{Binding Message.User}" 
+                                    FontSize="Small"
+                                    TextColor="Accent" 
+                                    VerticalOptions="End" 
+                                    HorizontalOptions="Fill" 
+                                    HorizontalTextAlignment="{Binding Message.User, Converter={StaticResource userAlignmentConverter}}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout 
+                Orientation="Horizontal" 
+                HorizontalOptions="FillAndExpand">
+                <Entry
+                    Text="{Binding Query, Mode=TwoWay}" 
+                    Placeholder="Write a message" 
+                    HorizontalTextAlignment="End" 
+                    Margin="10" 
+                    VerticalOptions="End" 
+                    HorizontalOptions="FillAndExpand"/>
+                <Button 
+                    Command="{Binding SendQueryCommand}"
+                    Text="Send message" 
+                    WidthRequest="150" 
+                    Margin="10"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
